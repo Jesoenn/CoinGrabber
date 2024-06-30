@@ -1,17 +1,20 @@
 package main;
 
 import display.Background;
+import display.Coin;
 import display.Player;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Engine extends JPanel implements Runnable{
     private int screenWidth=700,screenHeight=500;
     private Player player;
-    Background background;
+    private ArrayList<Coin> coins;
+    private Background background;
     private KeyReader keyReader;
-    Thread runGame;
+    private Thread runGame;
     public Engine(){
         setPreferredSize(new Dimension(screenWidth,screenHeight));
         setDoubleBuffered(true);
@@ -23,7 +26,10 @@ public class Engine extends JPanel implements Runnable{
     protected void startGame(){
         requestFocusInWindow();
         //OBJECTS
-        player=new Player(screenWidth,screenHeight);
+        coins=new ArrayList<>();
+        coins.add(new Coin(screenWidth,screenHeight,100)); //TEST
+        coins.add(new Coin(screenWidth,screenHeight,400)); //TEST
+        player=new Player(screenWidth,screenHeight,coins);
         background=new Background(screenWidth,screenHeight);
         //GAME LOOP
         runGame=new Thread(this);
@@ -58,6 +64,8 @@ public class Engine extends JPanel implements Runnable{
             player.startJump();
         player.update(speed);
         background.updateClouds();
+        for(Coin coin: coins)
+            coin.update();
     }
 
     public void paintComponent(Graphics g){
@@ -65,6 +73,10 @@ public class Engine extends JPanel implements Runnable{
         Graphics2D g2d=(Graphics2D) g;
         if(background!=null)
             background.draw(g2d);
+        if(coins!=null){
+            for(Coin coin: coins)
+                coin.draw(g2d);
+        }
         if(player!=null)
             player.draw(g2d);
     }
