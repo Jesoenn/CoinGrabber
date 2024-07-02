@@ -21,10 +21,12 @@ public class DisplayCoins {
         downloadImages();
     }
     public void draw(Graphics2D g2d){
-        g2d.drawImage(background,resolution.width-400, 100, null);
+        g2d.drawImage(background,resolution.width-180, 30,150,50, null);
+        g2d.drawImage(coin,resolution.width-170, 40,30,30, null);
         g2d.setColor(Color.WHITE);
         g2d.setFont(comic);
-        g2d.drawString(String.valueOf(Player.collectedCoins),resolution.width-40,50);
+        int howManyNumbers=String.valueOf(Player.collectedCoins).length(); //1-1 10-2 100-3 cyfry
+        g2d.drawString(String.valueOf(Player.collectedCoins),resolution.width-howManyNumbers*21-40,65);
     }
     private void downloadImages(){
         try {
