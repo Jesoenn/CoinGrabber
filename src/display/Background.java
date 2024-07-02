@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Background {
     private Image foreground,clouds;
-    private int x1,x2;
+    private int x1,x2; //coordinates for 2 cloud pictures
     private int screenWidth,screenHeight;
     public Background(int screenWidth,int screenHeight){
         this.screenHeight=screenHeight;
@@ -15,7 +15,7 @@ public class Background {
         downloadImages();
     }
     private void downloadImages(){
-        String mainPath="/images/background/";
+        String mainPath="/resources/background/";
         try{
             foreground=ImageIO.read(getClass().getResource(mainPath+"foreground.png"));
             clouds=ImageIO.read(getClass().getResource(mainPath+"clouds.png"));
@@ -23,6 +23,7 @@ public class Background {
             e.printStackTrace();
         }
     }
+    //clouds movement
     public void updateClouds(){
         x1+=1;
         x2+=1;
@@ -35,5 +36,13 @@ public class Background {
         g2d.drawImage(clouds,x1,0,screenWidth,screenHeight,null);
         g2d.drawImage(clouds,x2,0,screenWidth,screenHeight,null);
         g2d.drawImage(foreground,0,0,screenWidth,screenHeight,null);
+    }
+    public void updateSizes(Dimension resolution){
+        screenWidth=resolution.width;
+        screenHeight=resolution.height;
+        if(x1>x2) //x1 bardziej w prawo
+            x2=x1-screenWidth;
+        else if(x2>x1)
+            x1=x2-screenWidth;
     }
 }

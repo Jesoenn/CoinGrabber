@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 public class PlayerAnimations {
-    private int screenWidth,screenHeight,x,y,playerHeight;
+    private int screenWidth,screenHeight,x,y,playerHeight,playerWidth;
     private ArrayList<Image> runAnimation;
     private ArrayList<Image> idleAnimation;
     private ArrayList<Image> jumpAnimation;
@@ -16,8 +16,9 @@ public class PlayerAnimations {
     private int currentAnimation=1;
     private Image displayImage;
     private boolean jumped=false;
-    public PlayerAnimations(int screenWidth,int screenHeight, int x, int y,int playerHeight){
+    public PlayerAnimations(int screenWidth,int screenHeight, int x, int y,int playerHeight,int playerWidth){
         this.playerHeight=playerHeight;
+        this.playerWidth=playerWidth;
         this.x=x;
         this.y=y;
         this.screenHeight=screenHeight;
@@ -26,7 +27,7 @@ public class PlayerAnimations {
         downloadImages("idle",5);
         downloadImages("jump",8);
     }
-    protected void update(int x,int y,int prevX,int prevY,boolean jumped){
+    protected void update(int x,int y,int prevX,boolean jumped){
         this.jumped=jumped;
         this.x=x;
         this.y=y;
@@ -65,16 +66,16 @@ public class PlayerAnimations {
         AffineTransform originalTransform = g2d.getTransform(); //zapis transformacji
         if(facing=="left"){
             g2d.scale(-1,1);
-            g2d.drawImage(displayImage,-x-39,y,39,50,null);
+            g2d.drawImage(displayImage,-x-playerWidth,y,playerWidth,playerHeight,null);
             g2d.setTransform(originalTransform); //cofniecie transformacji
         }
         else{
-            g2d.drawImage(displayImage,x,y,39,50,null);
+            g2d.drawImage(displayImage,x,y,playerWidth,playerHeight,null);
         }
     }
     private void downloadImages(String name, int howMany){
         ArrayList<Image> animationPack=new ArrayList<>();
-        String mainPath="/images/"+name+"Animations/";
+        String mainPath="/resources/"+name+"Animations/";
         String path;
         for(int i=0; i<howMany; i++){
             path=mainPath+(i+1)+".png";
@@ -90,7 +91,11 @@ public class PlayerAnimations {
             idleAnimation=animationPack;
         else if(name=="jump")
             jumpAnimation=animationPack;
-
+    }
+    public void updateSizes(Dimension resolution,int y){
+        screenWidth=resolution.width;
+        screenHeight=resolution.height;
+        this.y=y;
     }
     public void changeDirection(String direction){
         facing=direction;

@@ -5,8 +5,8 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class CoinAnimations {
-    private int coinSize,x;
-    private ArrayList<Image> coinAnimation;
+    private int coinSize,x,y;
+    private static ArrayList<Image> coinAnimation;
     private static int[][] resolution=new int[2][10]; //x,przesuniecie, 10 kolumn
     private int tick=0;
     private int currentAnimation=1;
@@ -17,10 +17,11 @@ public class CoinAnimations {
         downloadImages();
         addResolution();
     }
-    protected void update(){
-        if(tick%30==0){
+    public void update(int y){
+        this.y=y;
+        if(tick%3==0){ //Every 3 frames animation gets changed
             currentAnimation++;
-            if(currentAnimation==11){
+            if(currentAnimation==11){ //if all animations displayed, repeat cycle
                 tick=0;
                 currentAnimation=1;
             }
@@ -29,11 +30,11 @@ public class CoinAnimations {
         tick++;
     }
     public void draw(Graphics2D g2d){
-        g2d.drawImage(currentImage,x+resolution[1][currentAnimation-1],450,resolution[0][currentAnimation-1],coinSize,null);
+        g2d.drawImage(currentImage,x+resolution[1][currentAnimation-1],y,resolution[0][currentAnimation-1],coinSize,null);
     }
     public void downloadImages(){
         coinAnimation=new ArrayList<>();
-        String mainPath="/images/coin/";
+        String mainPath="/resources/coin/";
         for(int i=0; i<10; i++){
             try{
                 coinAnimation.add(ImageIO.read(getClass().getResource(mainPath+(i+1)+".png")));
@@ -42,6 +43,7 @@ public class CoinAnimations {
             }
         }
     }
+    //Displaying coin sizes
     public void addResolution(){
         double scaler=coinSize/564.0;
         //          WIDTH                       MOVED TO X's RIGHT
