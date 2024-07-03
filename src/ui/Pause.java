@@ -10,7 +10,6 @@ import java.io.IOException;
 import static com.sun.java.accessibility.util.AWTEventMonitor.addMouseListener;
 
 public class Pause {
-    public static Rectangle pauseBounds;
     private ImageIcon pauseLight,pauseDark;
     private boolean buttonPressed=false;
     private MouseReader mouseReader=new MouseReader();
@@ -42,17 +41,19 @@ public class Pause {
         return false;
     }
     private void updateImage(){
+        //Initial press - change icon to light
         if(!buttonPressed && mouseReader.pressed){
             button.setIcon(pauseLight);
             buttonPressed=true;
         }
+        //mouse released -> Pause game
         if(buttonPressed && !mouseReader.pressed){
             button.setIcon(pauseDark);
             buttonPressed=false;
             gamePaused=!gamePaused;
         }
     }
-    //WYSWIETLENIE PAUZY NA EKRAN
+    //Display pausing screen
     public void start(Graphics2D g2d,int width,int height){
         unpauseButton.setBounds(0,0,width,height);
         String text;
@@ -68,6 +69,7 @@ public class Pause {
         text="Click anywhere on the screen to resume...";
         textWidth=g2d.getFontMetrics().stringWidth(text);
         g2d.drawString(text,width/2-textWidth/2,height/2);
+        //condition to unpause the game
         if(unpauseReader.pressed){
             gamePaused=false;
             unpauseButton.setBounds(-100,-100,1,1);

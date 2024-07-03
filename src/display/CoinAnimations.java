@@ -11,10 +11,14 @@ public class CoinAnimations {
     private int tick=0;
     private int currentAnimation=1;
     private Image currentImage;
+    public static boolean firstObject=true;
     public CoinAnimations(int coinSize, int x){
         this.x=x;
         this.coinSize=coinSize;
-        downloadImages();
+        if(firstObject){
+            downloadImages();
+            firstObject=false;
+        }
         addResolution();
     }
     public void update(int y){

@@ -6,7 +6,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 public class Player {
-    private int x,y,prevX,prevY,screenWidth,screenHeight,playerHeight=50,playerWidth=39;
+    private int x,y,prevX,prevY,screenWidth,screenHeight,playerHeight=100,playerWidth=78;
     //KEY ELEMENTS
     private ArrayList<Coin> coins;
     private Collision collision;

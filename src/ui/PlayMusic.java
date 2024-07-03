@@ -29,6 +29,7 @@ public class PlayMusic implements LineListener{
             clip=AudioSystem.getClip();
             clip.addLineListener(this);
             clip.open(audio);
+            //if song is unpaused
             if(pause==0)
                 clip.start();
         }catch (IOException e) {
@@ -49,6 +50,7 @@ public class PlayMusic implements LineListener{
             play();
         }
     }
+    //randomize songs queue
     private void randomize(){
         files= new ArrayList<>();
         ArrayList<Integer> numbers=new ArrayList<>();
@@ -61,6 +63,7 @@ public class PlayMusic implements LineListener{
         }
         System.out.println("SONGS ADDED");
     }
+    //if button was pressed, change song to paused
     public void change(){
         if(clip.isRunning()){
             pause=1;

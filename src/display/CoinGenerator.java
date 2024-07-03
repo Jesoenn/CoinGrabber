@@ -8,6 +8,7 @@ public class CoinGenerator {
     private Random generateNumber;
     private int screenWidth,screenHeight,x;
     private Coin coin;
+    public static int minimumChanceToSpawn=100;
     public CoinGenerator(int screenWidth, int screenHeight){
         this.screenHeight=screenHeight;
         this.screenWidth=screenWidth;
@@ -15,7 +16,7 @@ public class CoinGenerator {
     }
     public boolean generated(){
         int chances=generateNumber.nextInt(100)+1; //1-100;
-        if(chances==100){
+        if(chances>=minimumChanceToSpawn){
             coin=new Coin(screenWidth,screenHeight,generateNumber.nextInt(screenWidth-Coin.coinSize));
             return true;
         }

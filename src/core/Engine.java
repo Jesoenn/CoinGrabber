@@ -4,7 +4,6 @@ import display.Background;
 import display.Coin;
 import display.CoinGenerator;
 import display.Player;
-import ui.PlayMusic;
 import ui.UserInterfaceManager;
 
 import javax.swing.*;
@@ -12,6 +11,11 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Engine extends JPanel implements Runnable{
+    public enum State{
+        LOADING,
+        PLAYING,
+        PAUSED,
+    }
     private Dimension screenSize;
     private int screenWidth=900,screenHeight=600; //TYMCZASOWE rozmiary ekranu
     private Player player; //gracz
@@ -21,6 +25,8 @@ public class Engine extends JPanel implements Runnable{
     private KeyReader keyReader; //pobieranie naciskania klawiszy
     private Thread runGame; //watek na cala gre
     private CoinGenerator generator; //generowanie monet
+    public static State gameState;
+    public static int speedModifier=0;
     public Engine(){
         screenSize=new Dimension(screenWidth,screenHeight);
         setPreferredSize(screenSize);
@@ -28,6 +34,13 @@ public class Engine extends JPanel implements Runnable{
         keyReader=new KeyReader();
         addKeyListener(keyReader);
         setFocusable(true);
+        //EKRAN STARTOWY
+        gameState=State.LOADING;
+        //BUTTONS
+        setLayout(null);
+        uiManager=new UserInterfaceManager(screenSize);
+        for(JLabel button: uiManager.getAllButtons())
+            add(button);
     }
 
     protected void startGame(){
@@ -35,10 +48,10 @@ public class Engine extends JPanel implements Runnable{
         //OBJECTS
         generator=new CoinGenerator(screenWidth,screenHeight); //Generowanie monet
         coins=new ArrayList<>();//Monety
-        uiManager=new UserInterfaceManager(screenSize);
         player=new Player(screenWidth,screenHeight,coins);     //Gracz
         background=new Background(screenWidth,screenHeight);   //Tlo
         //GAME LOOP
+        //gameState=State.PLAYING;
         runGame=new Thread(this);
         runGame.start();
     }
@@ -58,20 +71,21 @@ public class Engine extends JPanel implements Runnable{
             }catch(Exception e){
                 e.printStackTrace();
             }
-            update();
+            updateScreenSizes();
+            if(gameState==State.PLAYING)
+                update();
             repaint();
         }
     }
     public void update(){
         //System.out.println(coins.size());
-        updateScreenSizes();
         if(generator.generated())
             coins.add(generator.getCoin()); //Dodanie wygenerowanej monety
         int speed=0; //potrzebne jezeli gracz skacze
         if(keyReader.right)
-            speed=5;
+            speed=5+speedModifier;
         if(keyReader.left)
-            speed=-5;
+            speed=-(5+speedModifier);
         if(keyReader.space && !player.didJump())
             player.startJump();
         player.update(speed); //player movement
@@ -91,6 +105,7 @@ public class Engine extends JPanel implements Runnable{
         }
         if(player!=null)
             player.draw(g2d);
+        //WHOLE UI WITH UPDATES
         if(uiManager!=null)
             uiManager.draw(g2d);
     }
