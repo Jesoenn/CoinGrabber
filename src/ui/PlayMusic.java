@@ -16,6 +16,7 @@ public class PlayMusic implements LineListener{
     private ArrayList<File> files;
     private Clip clip;
     private int i=0;
+    private int pause=0;
     public PlayMusic(){
         randomize();
         play();
@@ -28,7 +29,8 @@ public class PlayMusic implements LineListener{
             clip=AudioSystem.getClip();
             clip.addLineListener(this);
             clip.open(audio);
-            clip.start();
+            if(pause==0)
+                clip.start();
         }catch (IOException e) {
             throw new RuntimeException(e);
         } catch (UnsupportedAudioFileException e) {
@@ -39,7 +41,7 @@ public class PlayMusic implements LineListener{
     }
     @Override
     public void update(LineEvent event){
-        if (event.getType() == LineEvent.Type.STOP) {
+        if (pause==0 && event.getType() == LineEvent.Type.STOP) {
             clip.close();
             i++;
             if (i == files.size())
@@ -58,5 +60,15 @@ public class PlayMusic implements LineListener{
                 files.add(new File(mainPath+fileNames[number]));
         }
         System.out.println("SONGS ADDED");
+    }
+    public void change(){
+        if(clip.isRunning()){
+            pause=1;
+            clip.stop();
+        }
+        else if(!clip.isRunning()){
+            clip.start();
+            pause=0;
+        }
     }
 }
