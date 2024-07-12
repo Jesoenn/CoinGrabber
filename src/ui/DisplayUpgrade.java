@@ -50,9 +50,9 @@ public class DisplayUpgrade {
     }
     private void downloadImages(){
         try {
-            darkUpgrade=new ImageIcon(getClass().getResource("/resources/buttons/shop/ArrowUp/Default.png"));
-            lightUpgrade=new ImageIcon(getClass().getResource("/resources/buttons/shop/ArrowUp/Hover.png"));
-            coin= ImageIO.read(getClass().getResource("/resources/coin/1.png"));
+            darkUpgrade=new ImageIcon(getClass().getResource("/buttons/shop/ArrowUp/Default.png"));
+            lightUpgrade=new ImageIcon(getClass().getResource("/buttons/shop/ArrowUp/Hover.png"));
+            coin= ImageIO.read(getClass().getResource("/coin/1.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

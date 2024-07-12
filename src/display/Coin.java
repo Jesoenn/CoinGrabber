@@ -7,7 +7,7 @@ public class Coin {
     private int x;
     private static int screenWidth,screenHeight;
     public static final int coinSize=40;
-    private int y=-coinSize;
+    private int y=-coinSize; //starting y (above the screen)
     private CoinAnimations coinAnimations;
     private int currentAnimationNumber;
     private Ellipse2D hitbox;
@@ -25,8 +25,6 @@ public class Coin {
         hitbox=new Ellipse2D.Double(x+coinAnimations.getMovedX(currentAnimationNumber),y,coinAnimations.getWidth(currentAnimationNumber),coinSize);
     }
     public void draw(Graphics2D g2d){
-        //g2d.draw(hitbox);
-        //g2d.drawRect(x+coinAnimations.getMovedX(currentAnimationNumber),y,coinAnimations.getWidth(currentAnimationNumber),coinSize);
         coinAnimations.draw(g2d);
     }
     public void updateSizes(Dimension resolution){

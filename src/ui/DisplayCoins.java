@@ -14,8 +14,8 @@ import static java.awt.Font.BOLD;
 public class DisplayCoins {
     private Dimension resolution;
     private Font comic=MyFont.comic;
-    private Image coin,background,circle;
-    private final String mainPath="/resources/buttons/coinCounter/";
+    private Image coin,background;
+    private final String mainPath="/buttons/coinCounter/";
     public DisplayCoins(Dimension resolution){
         this.resolution=resolution;
         downloadImages();
@@ -30,9 +30,8 @@ public class DisplayCoins {
     }
     private void downloadImages(){
         try {
-            coin=ImageIO.read(getClass().getResource("/resources/coin/1.png"));
+            coin=ImageIO.read(getClass().getResource("/coin/1.png"));
             background=ImageIO.read(getClass().getResource(mainPath+"Dummy.png"));
-            circle=ImageIO.read(getClass().getResource(mainPath+"circle.png"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

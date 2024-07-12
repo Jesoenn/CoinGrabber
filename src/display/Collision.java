@@ -14,6 +14,11 @@ public class Collision {
         this.coins=coins;
         playSound=new CollectedSound();
     }
+
+    /**
+     * Check if collision happened with every single one of existing coins
+     * @return number of collisions, which is added to total collected coins
+     */
     public int check(){
         int collisions=0;
         Iterator<Coin> iterator=coins.iterator();

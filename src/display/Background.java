@@ -15,7 +15,7 @@ public class Background {
         downloadImages();
     }
     private void downloadImages(){
-        String mainPath="/resources/background/";
+        String mainPath="/background/";
         try{
             foreground=ImageIO.read(getClass().getResource(mainPath+"foreground.png"));
             clouds=ImageIO.read(getClass().getResource(mainPath+"clouds.png"));
@@ -37,6 +37,7 @@ public class Background {
         g2d.drawImage(clouds,x2,0,screenWidth,screenHeight,null);
         g2d.drawImage(foreground,0,0,screenWidth,screenHeight,null);
     }
+    //Update clouds location on screen
     public void updateSizes(Dimension resolution){
         screenWidth=resolution.width;
         screenHeight=resolution.height;

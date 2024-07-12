@@ -38,7 +38,7 @@ public class CoinAnimations {
     }
     public void downloadImages(){
         coinAnimation=new ArrayList<>();
-        String mainPath="/resources/coin/";
+        String mainPath="/coin/";
         for(int i=0; i<10; i++){
             try{
                 coinAnimation.add(ImageIO.read(getClass().getResource(mainPath+(i+1)+".png")));
@@ -47,7 +47,7 @@ public class CoinAnimations {
             }
         }
     }
-    //Displaying coin sizes
+    //Displaying coin sizes. Array makes each animation looks proportional
     public void addResolution(){
         double scaler=coinSize/564.0;
         //          WIDTH                       MOVED TO X's RIGHT

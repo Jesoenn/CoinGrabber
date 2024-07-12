@@ -35,7 +35,7 @@ public class UserInterfaceManager {
         if(Engine.gameState==Engine.State.LOADING){
             startingScreen.draw(g2d);
         }
-        else if(pause.update()==true){
+        else if(pause.update()){
             //mute.gamePaused();
             Engine.gameState= Engine.State.PAUSED;
             pause.start(g2d,resolution.width,resolution.height);

@@ -6,9 +6,8 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 public class Player {
-    private int x,y,prevX,prevY,screenWidth,screenHeight,playerHeight=100,playerWidth=78;
+    private int x,y,prevX,screenWidth,screenHeight,playerHeight=100,playerWidth=78;
     //KEY ELEMENTS
-    private ArrayList<Coin> coins;
     private Collision collision;
     public static int collectedCoins=0;
     //JUMPING SETTINGS
@@ -24,17 +23,14 @@ public class Player {
         this.screenHeight=screenHeight;
         x=screenWidth/2;
         y=screenHeight-playerHeight;
-        this.coins=coins;
         prevX=x;
-        prevY=y;
-        animations=new PlayerAnimations(screenWidth,screenHeight,x,y,playerHeight,playerWidth);
+        animations=new PlayerAnimations(screenHeight,x,y,playerHeight,playerWidth);
         hitbox=new Rectangle(x,y,playerWidth,playerHeight);
         collision=new Collision(this,coins);
     }
     public void update(int speed){
         x+=speed;
-        //if(x>screenWidth-39 || x<0) //When touching screen border, push sprite back
-        //    x-=speed;
+        //Used to push back sprite onto visible screen when resizing
         if(x>screenWidth-playerWidth)
             x=screenWidth-playerWidth;
         else if(x<0)
@@ -75,10 +71,6 @@ public class Player {
         else{
             jumped=false;
         }
-    }
-    public void updateCoins(ArrayList<Coin> coins){
-        this.coins=coins;
-        collision.updateCoins(coins);
     }
     public void updateSizes(Dimension resolution){
         screenWidth=resolution.width;

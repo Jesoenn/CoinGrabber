@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class CoinGenerator {
     private Random generateNumber;
-    private int screenWidth,screenHeight,x;
+    private int screenWidth,screenHeight;
     private Coin coin;
     public static int minimumChanceToSpawn=100;
     public CoinGenerator(int screenWidth, int screenHeight){
@@ -14,6 +14,7 @@ public class CoinGenerator {
         this.screenWidth=screenWidth;
         generateNumber=new Random();
     }
+    //Try to generate coin
     public boolean generated(){
         int chances=generateNumber.nextInt(100)+1; //1-100;
         if(chances>=minimumChanceToSpawn){

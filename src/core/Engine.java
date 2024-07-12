@@ -1,9 +1,6 @@
 package core;
 
-import display.Background;
-import display.Coin;
-import display.CoinGenerator;
-import display.Player;
+import display.*;
 import ui.UserInterfaceManager;
 
 import javax.swing.*;
@@ -11,22 +8,26 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class Engine extends JPanel implements Runnable{
+
+    /**
+     * game states
+     */
     public enum State{
         LOADING,
         PLAYING,
         PAUSED,
     }
-    private Dimension screenSize;
-    private int screenWidth=900,screenHeight=600; //TYMCZASOWE rozmiary ekranu
-    private Player player; //gracz
-    private ArrayList<Coin> coins; //monety na ekranie
+    private Dimension screenSize;                   //Autoupdateing screensize
+    private int screenWidth=900,screenHeight=600;   //Starting screen size
+    private Player player;                          //player
+    private ArrayList<Coin> coins;                  //Coins
     private UserInterfaceManager uiManager;
-    private Background background; //tlo
-    private KeyReader keyReader; //pobieranie naciskania klawiszy
-    private Thread runGame; //watek na cala gre
-    private CoinGenerator generator; //generowanie monet
-    public static State gameState;
-    public static int speedModifier=0;
+    private Background background;                  //tlo
+    private KeyReader keyReader;                    //pobieranie naciskania klawiszy
+    private Thread runGame;                         //watek na cala gre
+    private CoinGenerator generator;                //generowanie monet
+    public static State gameState;                  //
+    public static int speedModifier=0;              //Speed boost after upgrades
     public Engine(){
         screenSize=new Dimension(screenWidth,screenHeight);
         setPreferredSize(screenSize);
@@ -51,7 +52,6 @@ public class Engine extends JPanel implements Runnable{
         player=new Player(screenWidth,screenHeight,coins);     //Gracz
         background=new Background(screenWidth,screenHeight);   //Tlo
         //GAME LOOP
-        //gameState=State.PLAYING;
         runGame=new Thread(this);
         runGame.start();
     }

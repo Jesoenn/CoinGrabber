@@ -15,7 +15,7 @@ public class Pause {
     private MouseReader mouseReader=new MouseReader();
     private MouseReader unpauseReader=new MouseReader();
     private JLabel button,unpauseButton;
-    private final String mainPath="/resources/buttons/pause/";
+    private final String mainPath="/buttons/pause/";
     private boolean gamePaused;
     public Pause(){
         downloadImages();

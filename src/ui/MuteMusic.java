@@ -11,7 +11,7 @@ import java.io.IOException;
 public class MuteMusic {
     private ImageIcon muteLightIcon,muteDarkIcon,unmuteLightIcon,unmuteDarkIcon;
     private JLabel button;
-    private final String mainPath="/resources/buttons/";
+    private final String mainPath="/buttons/";
     private boolean buttonPressed=false;
     private String musicState="playing",prevMusicState="playing";
     public int changeState=0; //operator to change from playing to stopped
